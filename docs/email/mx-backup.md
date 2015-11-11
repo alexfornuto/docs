@@ -25,11 +25,11 @@ external-resources:
 
 Before beginning this guide you should ask yourself two questions:
 
-1. Why would I want this?
+1.  Why would I want this?
 
 and
 
-2. Do I actually need this even if I don't run my own email servers?
+2.  Do I actually need this even if I don't run my own email servers?
 
 
 The answers to these are  
@@ -42,7 +42,7 @@ This is why automated email backups are important to everyone!
 
 And it isn't even that hard to do. Thanks to IMAP being a standart and everyone supporting it as the legacy access to their email servers next to their fancy new http based APIs it is possible for us to use great open source tools like imapsync to quickly create a copy.
 
-## Prerequesities
+## Prerequisites
 In order to setup a backup MX Server you should first consult the guides on how [Getting Started](/docs/gettings-started) how to secure your linode and how to setup a working email server with [mySQL, Dovecot and Postfix](/docs/email/email-with-postfix-dovecot-and-mysql).
 
 ### Bonus
@@ -145,17 +145,20 @@ After that we need to make the script executable with `chmod -x ~/cron-imapsync.
 
 ### Cron
 
-Setting up Cron is actually quite simple. Open the editor with  
-    `crontab -e`  
-if you have never opened Cron before it will prompt you to pick the editor you want to use. Pick the one you prefer and then add the following at the end of the file.
+Setting up Cron is actually quite simple. Open the editor with.
+
+    crontab -e
+
+If you have never opened Cron before it will prompt you to pick the editor you want to use. Pick the one you prefer and then add the following at the end of the file.
 
 {: .file-excerpt}
+crontab
 :   ~~~
     * 0 * * * sh /path-to-where-you-put-the-script
     ~~~
-    
+
 This entry into the cron configuration file will execute the shell script every day at midnight. That way you will have a daily backup of all your email accounts.
 
 {: .caution}
 >
-> imapsync should not be seen as a two way sync tool. It only copies all the emails that are new to it from the first server to the second server. Everything else is ignored. Alternatives to this are listed on [imapsyncs github page](https://github.com/imapsync/imapsync).
+> imapsync should not be seen as a two way sync tool. It only copies all the emails that are new to it from the first server to the second server. Everything else is ignored. Alternatives to this are listed on [imapsync's Github page](https://github.com/imapsync/imapsync).
