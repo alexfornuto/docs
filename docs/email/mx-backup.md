@@ -14,8 +14,8 @@ contributor:
     name: Constantin Jacob
     link: https://www.twitter.com/Tzeejay
 external-resources:
-	- '[IMAPSYNC](http://imapsync.lamiral.info/)'
-	- '[IMAPSYNC Github](https://github.com/imapsync/imapsync)'
+    - '[IMAPSYNC](http://imapsync.lamiral.info/)'
+    - '[IMAPSYNC Github](https://github.com/imapsync/imapsync)'
 ---
 
 {: .note}
@@ -63,45 +63,45 @@ If you would like to have easier access to the emails, for quick check ups for e
 
 We will get a copy of imapsync off of Github with the help of git which comes pre-installed with a lot of Linux distributions nowadays.
 
-	`git clone https://github.com/imapsync/imapsync.git`
-	
+    `git clone https://github.com/imapsync/imapsync.git`
+    
 At this point we would just run the programm but it depends on a couple of perl libraries which might have to be installed first. Monsieur Lammiral has a list with a couple of Linux distributions and how to install the dependencies in his Github repo.
 
 {: .note}
 >
 > You should take a look at it if you use something different than Debian/Ubuntu. [Here](https://github.com/imapsync/imapsync/tree/master/INSTALL.d)
 
-	sudo apt-get install \ 
-	libauthen-ntlm-perl \ 
-	libcrypt-ssleay-perl \ 
-	libdigest-hmac-perl \ 
-	libfile-copy-recursive-perl \ 
-	libio-compress-perl \ 
-	libio-socket-inet6-perl \ 
-	libio-socket-ssl-perl \ 
-	libio-tee-perl \ 
-	libmail-imapclient-perl \ 
-	libmodule-scandeps-perl \ 
-	libnet-ssleay-perl \ 
-	libpar-packer-perl \ 
-	libterm-readkey-perl \ 
-	libtest-pod-perl \ 
-	libtest-simple-perl \ 
-	libunicode-string-perl \ 
-	liburi-perl
+    sudo apt-get install \ 
+    libauthen-ntlm-perl \ 
+    libcrypt-ssleay-perl \ 
+    libdigest-hmac-perl \ 
+    libfile-copy-recursive-perl \ 
+    libio-compress-perl \ 
+    libio-socket-inet6-perl \ 
+    libio-socket-ssl-perl \ 
+    libio-tee-perl \ 
+    libmail-imapclient-perl \ 
+    libmodule-scandeps-perl \ 
+    libnet-ssleay-perl \ 
+    libpar-packer-perl \ 
+    libterm-readkey-perl \ 
+    libtest-pod-perl \ 
+    libtest-simple-perl \ 
+    libunicode-string-perl \ 
+    liburi-perl
 
 After that run 
 
-	`cpan Data:Uniqid`
-	
+    `cpan Data:Uniqid`
+    
 Now you can run the smoke test. If it succeeds it will print some useful information about the imapsync version you are using and then the help page just as if you used `imapsync`.
 
-	`./imapsync`
+    `./imapsync`
 
 If all is working fine copy it into the right directory so that it is accessible from everywhere 
 
-	`cp imapsync /usr/bin/`
-	
+    `cp imapsync /usr/bin/`
+    
 Test your installation of imapsync by typing `imapsync` in order to get a full printout of the features it offers (there are a lot of features).
 
 
@@ -126,34 +126,34 @@ First we need to write our little shell script. In it we will only put the imaps
 
 {: .file}
 ~/cron-imapsync.sh 
-:	~~~ bash
-	#! /bin/bash
-	
-	# This will sync your first email account automatically.
-	
-	imapsync --host1 youremailprovider.com --user1 youruser --password1 yourpassword --tls1 \
-	--host2 backup.yourdomain.com --user2 yourbackupuser --password2 yourbackupuserpassword --tls2 \
-	--nolog 2>&1 | tee -a /var/log/imapsync/imapsync.log
-	
-	echo "\n \n ///// \n \n End of the first transfer \n \n ///// \n \n" >> /var/log/imapsync/imapsync.log
-	
-	
-	# Copy and paste the above block as many times as you need to and replace all the values for the email servers (--host1 / --host2), users (--user1 / --user2) and password flags (--password1 / --password2).
-	~~~
+:   ~~~ bash
+    #! /bin/bash
+    
+    # This will sync your first email account automatically.
+    
+    imapsync --host1 youremailprovider.com --user1 youruser --password1 yourpassword --tls1 \
+    --host2 backup.yourdomain.com --user2 yourbackupuser --password2 yourbackupuserpassword --tls2 \
+    --nolog 2>&1 | tee -a /var/log/imapsync/imapsync.log
+    
+    echo "\n \n ///// \n \n End of the first transfer \n \n ///// \n \n" >> /var/log/imapsync/imapsync.log
+    
+    
+    # Copy and paste the above block as many times as you need to and replace all the values for the email servers (--host1 / --host2), users (--user1 / --user2) and password flags (--password1 / --password2).
+    ~~~
 
 After that we need to make the script executable with `chmod -x ~/cron-imapsync.sh`. You can move the script wherever you feel like but it needs to be accessible by cron.
 
 ### Cron
 
 Setting up Cron is actually quite simple. Open the editor with  
-	`crontab -e`  
+    `crontab -e`  
 if you have never opened Cron before it will prompt you to pick the editor you want to use. Pick the one you prefer and then add the following at the end of the file.
 
 {: .file-excerpt}
-:	~~~
-	* 0 * * * sh /path-to-where-you-put-the-script
-	~~~
-	
+:   ~~~
+    * 0 * * * sh /path-to-where-you-put-the-script
+    ~~~
+    
 This entry into the cron configuration file will execute the shell script every day at midnight. That way you will have a daily backup of all your email accounts.
 
 {: .caution}
