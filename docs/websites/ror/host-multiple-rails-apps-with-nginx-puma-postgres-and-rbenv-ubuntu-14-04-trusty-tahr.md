@@ -15,21 +15,23 @@ contributor:
     link: https://github.com/rickpeyton
 ---
 
-Like any skilled Rails developer, you probably have several play apps. But just because these aren't serious production apps doesn't mean that you should have to host them somewhere that forces you to shut them down for six hours a day. Instead, follow this guide to host several Rails apps on a single Linode and subsequently avert daily shutdowns.
+If you're a Rails developer, you probably have several apps other than your production environment. But just because these aren't serious production apps doesn't mean that you should have to host them on separate servers. This guide explains how to host several Rails apps on a single Linode.
 
 ## Before you begin
 
-This guide provides step-by-step instructions for hosting multiple Rails apps on Ubuntu 14.04 (Trusty Tahr) with Linode.
+ - This guide is written for Ubuntu 14.04 (Trusty Tahr).
 
-Before you begin, ensure that you have followed the [Getting Started](https://www.linode.com/docs/getting-started) and [Securing Your Server](https://www.linode.com/docs/security/securing-your-server/) guides.
+ - Ensure that you have followed the [Getting Started](https://www.linode.com/docs/getting-started) and [Securing Your Server](https://www.linode.com/docs/security/securing-your-server/) guides.
 
-This guide assumes that you have created and are logged in as a non-root user with sudo privileges. This guide uses the name rick, but you can use whatever name you choose and alter your commands accordingly.
+{: .note}
+>
+>This guide is written for a non-root user. Commands that require elevated privileges are prefixed with `sudo`. If you're not familiar with the `sudo` command, you can check our [Users and Groups](/docs/tools-reference/linux-users-and-groups) guide.
 
 ##Configuring your first Rails app
 
 ### Install Postgres
 
-1.  Update the system and install essentials by entering: 
+1.  Update the system and install essentials: 
 
         sudo apt-get update
         sudo apt-get upgrade --show-upgraded
@@ -39,54 +41,54 @@ This guide assumes that you have created and are logged in as a non-root user wi
 
         sudo -u postgres createuser --superuser $USER
 
-    Log into postgres and set the password for your user, if you wish:
+3.  **Optional** Log into postgres and set the password for your user:
 
         sudo -u postgres psql
         \password username
 
     This guide assumes you will be using a local Postgres database; thus, you may wish to leave the password blank.
 
-3.  To exit Postgres, type: 
+4.  To exit Postgres, type: 
 
         \q
 
 
 ### Install rbenv
 
-1.  To install rbenv as user, type:
+1.  To install `rbenv` as user, type:
 
         git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
         echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
         echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 
-2.  Now, restart the shell (log out and back in) and check that rbenv is installed by entering: 
+2.  Now, restart the shell (log out and back in) and check that rbenv is installed: 
 
         type rbenv
 
-3.  To install ruby-build as an rbenv plugin, enter: 
+3.  Install ruby-build as an rbenv plugin: 
 
         git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
-4.  To install rbenv-vars to manage environment variables, enter:
+4.  Install rbenv-vars to manage environment variables:
 
         git clone https://github.com/sstephenson/rbenv-vars.git ~/.rbenv/plugins/rbenv-vars
 
-5.  To install the latest version of Ruby, enter: 
+5.  Install the latest version of Ruby: 
         
         rbenv install 2.2.3
 
-6.  To set the global ruby version, enter: 
+6.  Set the global ruby version: 
         
         rbenv global 2.2.3
 
-7.  To confirm that it worked, enter:
+7.  Confirm that it worked:
 
         ruby -v
         ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-linux]
 
 ### Configure Rails
 
-1.  To install the rails gem, enter:
+1.  Install the rails gem:
 
         gem install rails
 
