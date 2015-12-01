@@ -2,7 +2,7 @@
 author:
     name: Linode Community
     email: docs@linode.com
-description: 'Graphite is an enterprise-level monitoring tool reknown for its performance on systems with limited resources. It stores numeric time-series data and renders graphs of this data on demand. This guide provides an introduction to installation and basic setup of Graphite together with Grafana.'
+description: 'Graphite is an enterprise-level monitoring tool renowned for its performance on systems with limited resources. It stores numeric time-series data and renders graphs of this data on demand. This guide provides an introduction to installation and basic setup of Graphite together with Grafana.'
 keywords: 'graphite,grafana,monitor,monitoring,analytics'
 license: '[CC BY-ND 3.0](http://creativecommons.org/licenses/by-nd/3.0/us/)'
 modified: 'Tuesday, December 1st, 2015'
@@ -23,7 +23,7 @@ external_resources:
 *This is a Linode Community guide. Write for us and earn $250 per published guide.*
 <hr>
 
-[Graphite](http://graphite.readthedocs.org/en/latest/index.html) is an enterprise-level monitoring tool reknown for performing well on systems with limited resources. It stores numeric time-series data and renders graphs of this data on demand. This guide provides an introduction to installation and basic setup of Graphite together with [Grafana](http://grafana.org/), a popular open source application for visualizing large-scale measurement data, on Ubuntu 14.04.
+[Graphite](http://graphite.readthedocs.org/en/latest/index.html) is an enterprise-level monitoring tool renowned for performing well on systems with limited resources. It stores numeric time-series data and renders graphs of this data on demand. This guide provides an introduction to installation and basic setup of Graphite together with [Grafana](http://grafana.org/), a popular open source application for visualizing large-scale measurement data, on Ubuntu 14.04.
 
 ## Before You Begin
 
@@ -68,7 +68,7 @@ external_resources:
 
 	For more information on how to configure Carbon storage, see the section [storage-schemas.conf](http://graphite.readthedocs.org/en/latest/config-carbon.html#storage-schemas-conf) in Graphite's documentation.
 
-2.  Copy the defaut aggregation configuration to `/etc/carbon` so we can configure our own settings:
+2.  Copy the default aggregation configuration to `/etc/carbon` so we can configure our own settings:
 
 		sudo cp /usr/share/doc/graphite-carbon/examples/storage-aggregation.conf.example /etc/carbon/storage-aggregation.conf
 
@@ -260,7 +260,7 @@ external_resources:
 		</VirtualHost>
 		~~~
 
-7.  Enable grafana site configuration with:
+7.  Enable Grafana site configuration with:
 
 		sudo a2ensite apache2-grafana
 
