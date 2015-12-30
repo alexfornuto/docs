@@ -80,11 +80,11 @@ Now it is difficult all commands at once and you might want a quick reference on
 
 2.  Now edit the .bashrc so that it is loaded by the shell every time you login. Open the file and add the following line in the editor assuming you downloaded the file in the home directory.
 
-        {: .file-excerpt}
-        /home/username/.bashrc
-        :   ~~~ bash
-        source /home/username/wp-completion.bash
-        ~~~
+    {: .file-excerpt}
+    /home/username/.bashrc
+    :   ~~~ bash
+    source /home/username/wp-completion.bash
+    ~~~
 
 3.  Now run the following command to reload the Bash profile.
 
