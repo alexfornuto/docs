@@ -44,7 +44,7 @@ Before we move ahead, make sure you have completed the following guides:
 
         curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-    Or
+    **Or**
 
         wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
@@ -75,34 +75,39 @@ Bash completion feature of WP-CLI will allow you to see all the available comman
 
 1.  Download the bash script in your home directory.
 
-        cd /home/username
+        cd ~/
         wget https://github.com/wp-cli/wp-cli/raw/master/utils/wp-completion.bash
 
-2.  Edit the `.bashrc` file so that it is loaded by the shell every time you login. Open the file and add the following line in the editor assuming you downloaded the file in the home directory.
+2.  Edit the `.bashrc` file so that it is loaded by the shell every time you login. Open the file and add the following line in the editor, replacing `username`.
 
-        {: .file-excerpt}
-        ~/.bashrc
-        :   ~~~ bash
-            source /home/username/wp-completion.bash
-            ~~~
+    {: .file-excerpt}
+    ~/.bashrc
+    :   ~~~ bash
+        source /home/username/wp-completion.bash
+        ~~~
 
 
 3.  Run the following command to reload the Bash profile.
 
         source ~/.bashrc
 
-That's it. Bash Completion is enabled. To test it type `wp theme` and press **Tab**. You will see the list of available commands with `wp theme` again on the prompt.
+Bash Completion is now enabled. To test it type `wp theme ` (include the trailing space) and press **Tab** twice.
 
 ## Basics of WP-CLI
-Before getting to the main part, let us learn some essential basics of how exactly WP-CLI works. This would help you feel comfortable with what is going to follow next.
 
-So far we have seen WP-CLI is accessed through the keyword `wp`. What follows that is a set of commands and their own sub commands. For example we have a command to download WordPress which goes like `wp core download`. Here wp is the main command while core and download are its sub-commands. There can be several sub-commands for each sub-command as well.
+Before moving on, let's learn some basics of how WP-CLI works.
 
-WP-CLI also comes with a pretty detailed help section which will allow you to keep tab on all the commands you would need. You can access it by typing
+So far we have seen WP-CLI is accessed through the keyword `wp`. What follows is a set of commands and their own sub commands. For example, we have a command to download WordPress which is:
+
+    wp core download
+
+Here `wp` is the main command while `core` and `download` are its sub-commands. There can be several sub-commands for each sub-command as well.
+
+WP-CLI also comes with a detailed help section which shows all the commands you might need. To access:
 
     wp help
 
-Do that and you will get a screen similar to
+The output should resemble:
 
     wp
 
@@ -128,23 +133,19 @@ Do that and you will get a screen similar to
     :
 
 
-`:` is a prompt where you need to enter few commands to navigate through this help menu. Up and down arrow keys will take you through the complete help. And typing `q` will exit the help menu. That's all you need to know for now. For complete detail on how to navigate through the complete help section, you can always type `h` at the above prompt.
-
-In our last step, we enabled Bash Completion feature for WP-CLI. To use that type `wp` and press tab twice. You would see the list of available commands. You can repeat the same by typing `wp core` and then pressing tab twice. Now you will see a list of commands that can be used with `core`.
-
 ## Installing WordPress
 
 ### Setting up Database
 
-1.  Before you proceed, you need to setup a database first. For that, login to the MySQL server first. Replace `user` with your MySQL username.
+1.  Before you proceed, you need to setup a database. Log in to the MySQL server, replacing `user` with your MySQL username:
 
         mysql -u user -p
 
-2.  Next step is to create a database.
+2.  Create a database:
 
         create database wordpress;
 
-3.  Now we need to grant all the required privileges for the database to the mysql user.
+3.  Grant required privileges for the database to the mysql user WordPress will use for database access. Replace `user` and `password`:
 
         grant all on wordpress.* to 'user' identified by 'password';
 
@@ -152,7 +153,8 @@ In our last step, we enabled Bash Completion feature for WP-CLI. To use that typ
 
 ### Main Install
 
-1.  Move to the Apache document root directory and give appropriate ownership to the public_html directory.
+1.  Move to the Apache document root directory and give appropriate ownership to the `public_html` directory.
+
         cd /var/www/html/example.com
         sudo chown username public_html
         cd public_html
