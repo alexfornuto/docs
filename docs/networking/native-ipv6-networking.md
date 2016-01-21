@@ -22,6 +22,8 @@ It is important to note that Linode does not offer private IPv6 address allocati
 {: .note }
 >
 > The steps provided in this guide require root privileges. It is assumed that you will run these commands as the root superuser. If you are not logged in as `root` you will need to use `sudo`. For more information on privileges see our [Users and Groups](/docs/tools-reference/linux-users-and-groups/) guide.
+>
+> Be sure to disable [Network Helper](/docs/platform/network-helper#turn-network-helper-on-for-individual-configuration-profiles) before manually configuring addresses.
 
 ## Setting up IPv6
 
@@ -45,7 +47,7 @@ As displayed above, you will have inet6 blocks even if you only have one IPv6 ad
 
  * The first, ending in `global`, is the global IPv6 address which everyone can connect to. 
 
- * The second, ending in `link`, is your link-local address. An IPv6 link-local address is a unicast address that can be automatically configured on any interface. The link-local is usually in the FE80::/10 range, however to comply with [RFC 3849](https://tools.ietf.org/html/rfc3849), the link-local for the documentation address is in the FF32::/10 range.
+ * The second, ending in `link`, is your link-local address. An IPv6 link-local address is a unicast address that can be automatically configured on any interface. The link-local is usually in the `FE80::/10` range, however to comply with [RFC 3849](https://tools.ietf.org/html/rfc3849), the link-local for the documentation address is in the `FF32::/10` range.
 
 If your Linode does not have the correct IPv6 address or an IPv6 address at all, you should verify that you have router advertisements enabled and you have disabled privacy extensions. In order to use Linode's SLAAC, your Linode will need to accept router advertisements. These settings are properly set in our distribution templates by default.
 
@@ -55,7 +57,7 @@ You can request additional IPv6 addresses at any time by opening a [support tick
 
 {: .table .table-striped }
 | Pool   | No. of IPS                    |
-|:-------|:------------------------------|
+|:-------|------------------------------:|
 | /56    | 4,722,366,482,869,645,213,696 |
 | /64    | 18,446,744,073,709,551,616    |
 | /116   | 4,096                         |
@@ -97,13 +99,14 @@ While default IPv6 addresses are configured automatically, you will need to stat
       iface eth0 inet dhcp
 
       # IPv6 Address Blocks
-      # You should add an additional block for each IPv6 address you need configured.
       # You do not need to configure a block for your default IPv6 address, it will be brought up via SLAAC
-      iface eth0 inet6 static
-        address 2001:DB8:2000:aff0::1/64
+      iface eth0 inet6 auto 
+        up      ip -6 addr add 2001:db8:2000:aff0::1/64
+        down    ip -6 addr del 2001:DB8:2000:aff0::1/64
+     
+        up      ip -6 addr add 2001:db8:2000:aff0::2/64
+        down    ip -6 addr del 2001:DB8:2000:aff0::2/64
 
-      iface eth0 inet6 static
-        address 2001:DB8:2000:aff0::2/64
       ~~~
 
 2.  Restart networking. As this will break an SSH connection, this command should be performed in [LISH](/docs/networking/using-the-linode-shell-lish)
@@ -146,12 +149,10 @@ On CentOS or Fedora, edit `/etc/sysconfig/network-scripts/ifcfg-eth0` to set up 
 If you are using CentOS 6.5 or lower, restart networking:
 
     service network restart
-    
-If you are using CentOS 7, you will need to reload your configuration using `nmcli`, and bring your static interface down and back up:
 
-    nmcli reload
-    nmcli con down "System eth0"
-    nmcli con up "System eth0"
+If you are using CentOS 7, restart networking with `systemctl`:
+
+    systemctl restart network.service 
 
 ### Arch Linux (netctl)
 
