@@ -73,7 +73,7 @@ By default, password authentication is used to connect to your Linode via SSH. A
 
 ### Create an Authentication Key-pair
 
-1.  This is done on your local computer, **not** your Linode, and will create a 4096-bit RSA key-pair. During creation, you will be given the option to encrypt the private key with a passphrase. This means that the it cannot be used without entering the passphrase, unless you save it to your local desktop's keychain manager. We suggest you use the key pair with a passphrase, but you can leave the passphrase field blank to skip this.
+1.  This is done on your local computer, **not** your Linode, and will create a 4096-bit RSA key-pair. During creation, you will be given the option to encrypt the private key with a passphrase. This means that it cannot be used without entering the passphrase, unless you save it to your local desktop's keychain manager. We suggest you use the key pair with a passphrase, but you can leave the passphrase field blank to skip this.
 
     **Linux / OS X**
 
