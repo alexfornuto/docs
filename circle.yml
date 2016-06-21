@@ -8,4 +8,4 @@ dependencies:
 test:
   override:
     - ls ~/docsmith/source/docs
-    - bundle exec middleman build --verbose
+    - cd ~/docsmith/; bundle exec middleman build --verbose
