@@ -1,6 +1,6 @@
 dependencies:
   pre:
-    - git clone 'https://alexfornuto:${BBPASS}@bitbucket.org/alexfornuto/docsmith.git/' ~/docsmith
+    - git clone https://alexfornuto:${BBPASS}@bitbucket.org/alexfornuto/docsmith.git/ ~/docsmith
     - cp ~/docs/docs ~/docsmith/source/
     - cd ~/docsmith
     - gem install thor bundler
