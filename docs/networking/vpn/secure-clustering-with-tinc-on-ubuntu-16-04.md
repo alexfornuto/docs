@@ -16,6 +16,10 @@ modified_by:
 
 tinc is a meshed VPN that can be used to encrypt traffic between a cluster of Linodes. For example, if you're running a MySQL database, and need more performance, you can setup a cluster of nodes and secure data as it passes through the network.
 
+{: .note}
+>
+>This guide is written for a non-root user. Commands that require elevated privileges are prefixed with `sudo`. If you’re not familiar with the `sudo` command, you can check our [Users and Groups](/docs/tools-reference/linux-users-and-groups) guide.
+
 ## Installing tinc
 
 1.  Make sure your systems are up to date.
@@ -29,9 +33,11 @@ tinc is a meshed VPN that can be used to encrypt traffic between a cluster of Li
 
 ## Configure tinc
 
-1.  Decide what you want to name your network and put it in `/etc/tinc/nets.boot`.
+1.  The file `/etc/tinc/nets.boot` stores the names of private networks used by your Linode. Use the command below to add yours, replacing `mynetwork` with your choice of network name.
 
         echo 'mynetwork' | sudo tee -a /etc/tinc/nets.boot
+
+    Remember to change `mynetwork` in all following commands to match.
 
 2.  Create a directory to put the network configuration files in.
 
@@ -39,7 +45,7 @@ tinc is a meshed VPN that can be used to encrypt traffic between a cluster of Li
 
 3.  Make up and down scripts to be run by tinc.
 
-    In the tinc-up file, you specify the IP address to be used by each node. In this example, `192.168.100.xxx` is used.
+    In the tinc-up file, you specify the Private IP address to be used by each node. In this example, `192.168.100.xxx` is used.
 
     {: .file }
     /etc/tinc/mynetwork/tinc-up
@@ -97,7 +103,7 @@ tinc is a meshed VPN that can be used to encrypt traffic between a cluster of Li
 
     When you have all the files ready, restart the `tinc` damon and ping another node to test.
 
-        service tinc restart
+        sudo service tinc restart
         ping 192.168.100.2
 
     If this doesn't work, you may need to open port 655 in your firewall.
